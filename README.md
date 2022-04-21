@@ -2,6 +2,10 @@
 
 A Keras implementation for foraminifera identification
 
+`docker build --tag forabot .`
+
+`docker run -it forabot /bin/bash`
+
 # references
 
 B. Zhong, Q. Ge, B. Kanakiya, R. Mitra, T. Marchitto, E. Lobaton, “A Comparative Study of Image Classification Algorithms for Foraminifera Identification,” IEEE Symp. Series on Computational Intelligence (SSCI), 2017. [Makes use of NCSU-CUB Foram Images 01 Dataset]
