@@ -7,12 +7,11 @@ from keras.applications import vgg16
 from keras.applications import xception
 
 img_shape = (224, 224)
+labels = ['G. Bulloides', 'G. Ruber', 'G. Sacculifer', 'N. Dutertrei', 'N. Incompta', 'N. Pachyderma', 'Others']
 
 model = load_model("./models/foram.h5")
-print(model)
 
-vgg16_model = xception.Xception(include_top=False, pooling='avg')
-# vgg16_model = vgg16.VGG16(include_top=False, pooling='avg')
+xception_model = xception.Xception(include_top=False, pooling='avg')
 resnet50_model = resnet.ResNet50(include_top=False, pooling='avg')
 
 img_path = "./data//02-24-17_Trial_1 G. Bulloides OOP 552A 7-9 cm 250-355 micro/"
@@ -31,7 +30,7 @@ img10 = np.expand_dims(np.percentile(group_images, 10, axis=-1), axis=-1)
 img = np.concatenate((img10, img50, img90), axis=-1)
 img = np.expand_dims(img, axis=0)
 
-fea_vgg16 = vgg16_model.predict_on_batch(vgg16.preprocess_input(img))
+fea_vgg16 = xception_model.predict_on_batch(vgg16.preprocess_input(img))
 fea_resnet50 = resnet50_model.predict_on_batch(resnet.preprocess_input(img))
 fea = np.concatenate((fea_vgg16, fea_resnet50), axis=1)
 feats = []
@@ -39,4 +38,5 @@ feats.append(fea)
 arr = np.squeeze(fea)
 
 classes = model.predict(fea)
-print(np.max(classes))
+print("Confidence:", np.max(classes))
+print("Label:", labels[np.argmax(classes)])
