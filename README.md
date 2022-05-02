@@ -14,10 +14,9 @@ docker run -it forabot /bin/bash
 ### Jetson Nano 2GB
 
 ```bash
+# pull image from https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-tensorflow
 sudo docker pull nvcr.io/nvidia/l4t-tensorflow:r32.6.1-tf2.5-py3
-```
-
-```
+# mount code and ssh into container
 sudo docker run -it --volume=/path/to/repo:/repo --rm --runtime nvidia --network host nvcr.io/nvidia/l4t-tensorflow:r32.6.1-tf2.5-py3
 ```
 
