@@ -5,6 +5,7 @@ import os
 from keras.applications import resnet
 from keras.applications import vgg16
 from keras.applications import xception
+from upload import upload_blob
 
 
 img_path = input('Enter image path: ')
@@ -17,9 +18,7 @@ model = load_model("./models/foram.h5")
 xception_model = xception.Xception(include_top=False, pooling='avg')
 resnet50_model = resnet.ResNet50(include_top=False, pooling='avg')
 
-# img_path = "./data/02-24-17_Trial_1 G. Bulloides OOP 552A 7-9 cm 250-355 micro/"
-# img_path = "./data/02-24-17_Trial_2 G. Bulloides OOP 552A 7-9 cm 250-355 micro/"
-# img_path = "./data/02-24-17_Trial_3 G. Bulloides OOP 552A 7-9 cm 250-355 micro/"
+
 img_filenames = [img_path + p for p in os.listdir(img_path)]
 
 
@@ -42,8 +41,7 @@ feats = []
 feats.append(fea)
 arr = np.squeeze(fea)
 
-# print(fea)
-# print(fea.shape)
+
 classes = model.predict(fea)
 print("Confidence:", np.max(classes))
 print("Label:", labels[np.argmax(classes)])
@@ -51,9 +49,6 @@ print("Label:", labels[np.argmax(classes)])
 font = cv2.FONT_HERSHEY_SIMPLEX
 cv2.putText(saveimg, labels[np.argmax(classes)] + " " + str(np.max(classes)), (20,50), font, 1, (0, 255, 0), 1, cv2.LINE_AA)
 cv2.imwrite("./data/" + 'pred.jpg', saveimg)
-
-
-from upload import upload_blob
 
 
 img_path = os.path.basename(os.path.normpath(img_path))
